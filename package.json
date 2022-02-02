@@ -18,8 +18,7 @@
   "author": "ElrondNetwork",
   "license": "ISC",
   "dependencies": {
-    "@babel/runtime": "^7.10.4",
-    "@elrondnetwork/erdjs": "^9.0.0",
-    "commander": "^5.1.0"
+    "@elrondnetwork/erdjs": "9.0.0-beta.15",
+    "commander": "9.0.0"
   }
 }
