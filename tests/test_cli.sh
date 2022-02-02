@@ -42,7 +42,7 @@ testErrors() {
     assertFileContains ${SANDBOX}/error.txt "no such file or directory"
 
     echo "> Bad password"
-    ${WALLETJS} sign -i ./testdata/txToBob.json -o ${SANDBOX}/txToBobSigned.json -k ${SANDBOX}/keyOfAlice.json -p ./testdata/passwordOfAlice-sCat.txt 2>${SANDBOX}/error.txt
+    ${WALLETJS} sign -i ./testdata/txToBob42.json -o ${SANDBOX}/nothing.json -k ${SANDBOX}/keyOfAlice.json -p ./testdata/passwordOfAlice-sCat.txt 2>${SANDBOX}/error.txt
     assertFileContains ${SANDBOX}/error.txt "possibly wrong password"
 }
 
