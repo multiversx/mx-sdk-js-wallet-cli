@@ -27,7 +27,10 @@ jobs:
         with:
           node-version: 12
       - run: npm ci
-      - run: npm test
+      - name: Run CLI tests
+        run: |
+          cd ./tests
+          source ./test_cli.sh && testAll || return 1
 
   publish-npm:
     needs: build
