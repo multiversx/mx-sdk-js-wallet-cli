@@ -9,7 +9,7 @@ main();
 
 function main() {
     const program = new Command();
-    program.version("1.0.0");
+    program.version("2.0.0");
     setupCli(program);
 
     try {

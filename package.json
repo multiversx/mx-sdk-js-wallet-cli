@@ -4,14 +4,15 @@
   "description": "Light CLI wrapper over the wallet components of @elrondnetwork/erdjs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ElrondNetwork/elrond-sdk.git",
-    "directory": "erdwalletjs-cli"
+    "url": "https://github.com/ElrondNetwork/erdwalletjs-cli.git"
   },
   "main": "index.js",
   "bin": {
     "erdwalletjs": "./index.js"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "cd ./tests && . ./test_cli.sh && testAll"
+  },
   "keywords": [
     "crypto"
   ],
