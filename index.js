@@ -3,13 +3,13 @@
 const os = require("os");
 const fs = require("fs");
 const { Command } = require("commander");
-const core = require("@elrondnetwork/elrond-core-js");
+const erdjs = require("@elrondnetwork/erdjs");
 
 main();
 
 function main() {
     const program = new Command();
-    program.version("1.0.0");
+    program.version("2.0.0");
     setupCli(program);
 
     try {
@@ -49,12 +49,13 @@ function setupCli(program) {
 
 function newMnemonic(cmdObj) {
     let mnemonicFile = asUserPath(cmdObj.mnemonicFile);
-    let account = new core.account();
-    let mnemonic = account.generateMnemonic();
+    let mnemonic = erdjs.Mnemonic.generate();
+    let words = mnemonic.getWords();
+    let mnemonicString = words.join(" ");
 
-    writeToNewFile(mnemonicFile, `${mnemonic}\n`)
+    writeToNewFile(mnemonicFile, `${mnemonicString}\n`)
     console.log(`Mnemonic saved to file: [${mnemonicFile}].`);
-    console.log(`\n${mnemonic}\n`);
+    console.log(`\n${mnemonicString}\n`);
 }
 
 function deriveKey(cmdObj) {
@@ -63,18 +64,19 @@ function deriveKey(cmdObj) {
     let keyFile = asUserPath(cmdObj.keyFile);
     let passwordFile = asUserPath(cmdObj.passwordFile);
     
-    let mnemonic = readText(mnemonicFile);
+    let mnemonicString = readText(mnemonicFile);
     let password = readText(passwordFile);
     
-    let account = new core.account();
-    let privateKeyHex = account.privateKeyFromMnemonic(mnemonic, false, accountIndex.toString(), "");
-    let privateKey = Buffer.from(privateKeyHex, "hex");
-    let keyFileObject = account.generateKeyFileFromPrivateKey(privateKey, password);
-    let keyFileJson = JSON.stringify(keyFileObject, null, 4);
+    let mnemonic = erdjs.Mnemonic.fromString(mnemonicString);
+    let userSecretKey = mnemonic.deriveKey(accountIndex);
+    let userPublicKey = userSecretKey.generatePublicKey();
+    let userAddress = userPublicKey.toAddress();
+    let userWallet = new erdjs.UserWallet(userSecretKey, password);
+    let userWalletJson = JSON.stringify(userWallet.toJSON(), null, 4);
 
-    console.log(`Derived key for account index = ${accountIndex}, address = ${account.address()}.`);
+    console.log(`Derived key for account index = ${accountIndex}, address = ${userAddress}.`);
     console.log(`Encrypted with password from [${passwordFile}] and saved to file: [${keyFile}].`);
-    writeToNewFile(keyFile, `${keyFileJson}\n`);
+    writeToNewFile(keyFile, `${userWalletJson}\n`);
 }
 
 function signMessage(cmdObj) {
@@ -88,26 +90,22 @@ function signMessage(cmdObj) {
     let keyFileJson = readText(keyFile);
     let keyFileObject = JSON.parse(keyFileJson);
     let password = readText(passwordFile);
-
-    let account = new core.account();
-    account.loadFromKeyFile(keyFileObject, password);
+    let userSigner = erdjs.UserSigner.fromWallet(keyFileObject, password);
     
-    let transaction = new core.transaction(
-        message.nonce,
-        account.address(),
-        message.receiver,
-        message.value,
-        message.gasPrice,
-        message.gasLimit,
-        message.data,
-        message.chainID,
-        message.version
-    );
+    let transaction = new erdjs.Transaction({
+        nonce: new erdjs.Nonce (message.nonce),
+        sender: userSigner.getAddress(),
+        receiver: new erdjs.Address(message.receiver),
+        value: erdjs.Balance.fromString(message.value),
+        gasPrice: new erdjs.GasPrice(message.gasPrice),
+        gasLimit: new erdjs.GasLimit(message.gasLimit),
+        data: new erdjs.TransactionPayload(message.data),
+        chainID: new erdjs.ChainID(message.chainID),
+        version: new erdjs.TransactionVersion(message.version)
+    });
 
-    let serializedTransaction = transaction.prepareForSigning();
-    transaction.signature = account.sign(serializedTransaction);
-    let signedTransaction = transaction.prepareForNode();
-    let signedTransactionJson = JSON.stringify(signedTransaction, null, 4);
+    userSigner.sign(transaction);
+    let signedTransactionJson = JSON.stringify(transaction.toPlainObject(), null, 4);
 
     writeToNewFile(outFile, `${signedTransactionJson}\n`);
 }

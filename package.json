@@ -1,25 +1,25 @@
 {
   "name": "@elrondnetwork/erdwalletjs-cli",
-  "version": "1.0.1",
-  "description": "Light CLI wrapper over @elrondnetwork/elrond-core-js",
+  "version": "2.0.0",
+  "description": "Light CLI wrapper over the wallet components of @elrondnetwork/erdjs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ElrondNetwork/elrond-sdk.git",
-    "directory": "erdwalletjs-cli"
+    "url": "https://github.com/ElrondNetwork/erdwalletjs-cli.git"
   },
   "main": "index.js",
   "bin": {
     "erdwalletjs": "./index.js"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "cd ./tests && . ./test_cli.sh && testAll"
+  },
   "keywords": [
     "crypto"
   ],
   "author": "ElrondNetwork",
   "license": "ISC",
   "dependencies": {
-    "@babel/runtime": "^7.10.4",
-    "@elrondnetwork/elrond-core-js": "^1.26.2",
-    "commander": "^5.1.0"
+    "@elrondnetwork/erdjs": "9.0.0-beta.15",
+    "commander": "9.0.0"
   }
 }
