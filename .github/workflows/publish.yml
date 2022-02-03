@@ -1,4 +1,4 @@
-name: Publish erdwalletjs-cli
+name: Publish erdwalletjs-cli on npmjs
 
 on:
   workflow_dispatch:
