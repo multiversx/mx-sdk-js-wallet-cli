@@ -19,7 +19,7 @@
   "author": "MultiversX",
   "license": "MIT",
   "dependencies": {
-    "@elrondnetwork/erdjs": "9.0.0-beta.15",
+    "@elrondnetwork/erdjs": "9.0.2",
     "commander": "9.0.0"
   }
 }
