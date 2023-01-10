@@ -2,7 +2,7 @@
 
 ## Overview
 
-**erdwalletjs** is a light CLI wrapper over [erdjs](https://www.npmjs.com/package/@elrondnetwork/erdjs) and allows one to generate mnemonics, derive key files and sign Elrond transactions.
+**erdwalletjs** is a light CLI wrapper over [erdjs](https://www.npmjs.com/package/@multiversx/erdjs) and allows one to generate mnemonics, derive key files and sign MultiversX transactions.
 It exposes the following **commands**:
 
 
