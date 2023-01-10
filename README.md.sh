@@ -21,7 +21,7 @@ generate() {
     printf "# Command Line Interface\n\n" >> README.md
 
     printf "## Overview\n\n" >> README.md
-    printf "**erdwalletjs** is a light CLI wrapper over [erdjs](https://www.npmjs.com/package/@elrondnetwork/erdjs) and allows one to generate mnemonics, derive key files and sign Elrond transactions.\n" >> README.md
+    printf "**erdwalletjs** is a light CLI wrapper over [erdjs](https://www.npmjs.com/package/@multiversx/erdjs) and allows one to generate mnemonics, derive key files and sign MultiversX transactions.\n" >> README.md
     printf "It exposes the following **commands**:\n\n" >> README.md
 
     code

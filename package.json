@@ -1,10 +1,10 @@
 {
-  "name": "@elrondnetwork/erdwalletjs-cli",
-  "version": "2.0.0",
-  "description": "Light CLI wrapper over the wallet components of @elrondnetwork/erdjs",
+  "name": "@multiversx/erdwalletjs-cli",
+  "version": "2.0.1",
+  "description": "Light CLI wrapper over the wallet components of erdjs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ElrondNetwork/erdwalletjs-cli.git"
+    "url": "https://github.com/multiversx/mx-sdk-erdjs-wallet-cli.git"
   },
   "main": "index.js",
   "bin": {
@@ -16,8 +16,8 @@
   "keywords": [
     "crypto"
   ],
-  "author": "ElrondNetwork",
-  "license": "ISC",
+  "author": "MultiversX",
+  "license": "MIT",
   "dependencies": {
     "@elrondnetwork/erdjs": "9.0.0-beta.15",
     "commander": "9.0.0"
