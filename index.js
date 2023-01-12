@@ -3,7 +3,8 @@
 const os = require("os");
 const fs = require("fs");
 const { Command } = require("commander");
-const erdjs = require("@elrondnetwork/erdjs");
+const core = require("@multiversx/sdk-core");
+const wallet = require("@multiversx/sdk-wallet");
 
 main();
 
@@ -49,7 +50,7 @@ function setupCli(program) {
 
 function newMnemonic(cmdObj) {
     let mnemonicFile = asUserPath(cmdObj.mnemonicFile);
-    let mnemonic = erdjs.Mnemonic.generate();
+    let mnemonic = wallet.Mnemonic.generate();
     let words = mnemonic.getWords();
     let mnemonicString = words.join(" ");
 
@@ -63,15 +64,15 @@ function deriveKey(cmdObj) {
     let accountIndex = parseInt(cmdObj.accountIndex) || 0;
     let keyFile = asUserPath(cmdObj.keyFile);
     let passwordFile = asUserPath(cmdObj.passwordFile);
-    
+
     let mnemonicString = readText(mnemonicFile);
     let password = readText(passwordFile);
-    
-    let mnemonic = erdjs.Mnemonic.fromString(mnemonicString);
+
+    let mnemonic = wallet.Mnemonic.fromString(mnemonicString);
     let userSecretKey = mnemonic.deriveKey(accountIndex);
     let userPublicKey = userSecretKey.generatePublicKey();
     let userAddress = userPublicKey.toAddress();
-    let userWallet = new erdjs.UserWallet(userSecretKey, password);
+    let userWallet = new wallet.UserWallet(userSecretKey, password);
     let userWalletJson = JSON.stringify(userWallet.toJSON(), null, 4);
 
     console.log(`Derived key for account index = ${accountIndex}, address = ${userAddress}.`);
@@ -90,18 +91,18 @@ function signMessage(cmdObj) {
     let keyFileJson = readText(keyFile);
     let keyFileObject = JSON.parse(keyFileJson);
     let password = readText(passwordFile);
-    let userSigner = erdjs.UserSigner.fromWallet(keyFileObject, password);
-    
-    let transaction = new erdjs.Transaction({
-        nonce: new erdjs.Nonce (message.nonce),
+    let userSigner = wallet.UserSigner.fromWallet(keyFileObject, password);
+
+    let transaction = new core.Transaction({
+        nonce: message.nonce,
         sender: userSigner.getAddress(),
-        receiver: new erdjs.Address(message.receiver),
-        value: erdjs.Balance.fromString(message.value),
-        gasPrice: new erdjs.GasPrice(message.gasPrice),
-        gasLimit: new erdjs.GasLimit(message.gasLimit),
-        data: new erdjs.TransactionPayload(message.data),
-        chainID: new erdjs.ChainID(message.chainID),
-        version: new erdjs.TransactionVersion(message.version)
+        receiver: new core.Address(message.receiver),
+        value: message.value,
+        gasPrice: message.gasPrice,
+        gasLimit: message.gasLimit,
+        data: new core.TransactionPayload(message.data),
+        chainID: message.chainID,
+        version: message.version
     });
 
     userSigner.sign(transaction);
