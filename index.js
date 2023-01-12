@@ -21,7 +21,7 @@ function main() {
 }
 
 function setupCli(program) {
-    program.name("erdwalletjs")
+    program.name("mxjs-wallet")
 
     program
         .command("new-mnemonic")
