@@ -1,14 +1,14 @@
-# Command Line Interface
+# mx-sdk-js-wallet-cli
 
 ## Overview
 
-**erdwalletjs** is a light CLI wrapper over [erdjs](https://www.npmjs.com/package/@multiversx/erdjs) and allows one to generate mnemonics, derive key files and sign MultiversX transactions.
-It exposes the following **commands**:
+**sdk-wallet-cli** is a light CLI wrapper over [@multiversx/sdk-wallet](https://www.npmjs.com/package/@multiversx/sdk-wallet) and allows one to generate mnemonics, derive key files and sign MultiversX transactions.
+It exposes the following **commands**, via the `mxjs-wallet` alias:
 
 
 ```
-$ erdwalletjs --help
-Usage: erdwalletjs [options] [command]
+$ mxjs-wallet --help
+Usage: mxjs-wallet [options] [command]
 
 Options:
   -V, --version           output the version number
@@ -26,8 +26,8 @@ Commands:
 
 
 ```
-$ erdwalletjs new-mnemonic --help
-Usage: erdwalletjs new-mnemonic [options]
+$ mxjs-wallet new-mnemonic --help
+Usage: mxjs-wallet new-mnemonic [options]
 
 Create a new mnemonic phrase (24 words)
 
@@ -42,8 +42,8 @@ Options:
 
 
 ```
-$ erdwalletjs derive-key --help
-Usage: erdwalletjs derive-key [options]
+$ mxjs-wallet derive-key --help
+Usage: mxjs-wallet derive-key [options]
 
 Derive a JSON key-file from an existing mnemonic phrase
 
@@ -63,8 +63,8 @@ Options:
 
 
 ```
-$ erdwalletjs sign --help
-Usage: erdwalletjs sign [options]
+$ mxjs-wallet sign --help
+Usage: mxjs-wallet sign [options]
 
 Sign a JSON transaction
 

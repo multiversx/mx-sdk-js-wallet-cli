@@ -1,14 +1,14 @@
 {
-  "name": "@multiversx/erdwalletjs-cli",
-  "version": "2.0.1",
-  "description": "Light CLI wrapper over the wallet components of erdjs",
+  "name": "@multiversx/sdk-wallet-cli",
+  "version": "2.1.0",
+  "description": "Light CLI wrapper over the wallet components",
   "repository": {
     "type": "git",
-    "url": "https://github.com/multiversx/mx-sdk-erdjs-wallet-cli.git"
+    "url": "https://github.com/multiversx/mx-sdk-js-wallet-cli"
   },
   "main": "index.js",
   "bin": {
-    "erdwalletjs": "./index.js"
+    "mxjs-wallet": "./index.js"
   },
   "scripts": {
     "test": "cd ./tests && . ./test_cli.sh && testAll"
@@ -19,7 +19,8 @@
   "author": "MultiversX",
   "license": "MIT",
   "dependencies": {
-    "@elrondnetwork/erdjs": "9.0.0-beta.15",
+    "@multiversx/sdk-core": "11.2.0",
+    "@multiversx/sdk-wallet": "2.1.2",
     "commander": "9.0.0"
   }
 }
